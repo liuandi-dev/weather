@@ -1,0 +1,138 @@
+/* ===== 全局重置 + 主题变量 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --accent: #6366f1;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --error: #dc2626;
+}
+
+body {
+  font-family: system-ui, "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.5s;
+}
+
+/* ===== 背景：随天气切换（script.js 给 body 换类）===== */
+body.bg-default { background: #f0f4f8; }
+body.bg-sunny  { background: linear-gradient(180deg, #bfdbfe 0%, #eff6ff 60%, #f8fafc 100%); }
+body.bg-cloudy { background: linear-gradient(180deg, #cbd5e1 0%, #f1f5f9 60%, #f8fafc 100%); }
+body.bg-rain   { background: linear-gradient(180deg, #94a3b8 0%, #e2e8f0 60%, #f1f5f9 100%); }
+body.bg-snow   { background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 60%, #f8fafc 100%); }
+body.bg-storm  { background: linear-gradient(180deg, #64748b 0%, #cbd5e1 60%, #e2e8f0 100%); }
+body.bg-fog    { background: linear-gradient(180deg, #d1d5db 0%, #f3f4f6 60%, #f9fafb 100%); }
+
+header { text-align: center; padding: 40px 20px 8px; }
+header h1 { font-size: 28px; }
+.subtitle { color: var(--muted); margin-top: 4px; }
+
+main {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+  flex: 1;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+}
+
+/* 搜索行 */
+.search-row { display: flex; gap: 10px; }
+#city-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+}
+#city-input:focus { border-color: var(--accent); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+
+.hint { min-height: 20px; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.hint.error { color: var(--error); }
+
+/* 候选城市列表 */
+.city-list { margin-top: 8px; }
+.city-item {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.city-item:hover { border-color: var(--accent); background: #eef2ff; }
+.city-item small { color: var(--muted); margin-left: 6px; }
+
+/* 当前天气 */
+.current-card { text-align: center; }
+.now-label { font-size: 13px; color: var(--muted); letter-spacing: 4px; }
+.now-main { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 8px 0; }
+.now-icon { font-size: 64px; }
+.now-temp { font-size: 64px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.now-desc { font-size: 17px; }
+.advice {
+  margin-top: 12px;
+  background: #eef2ff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+/* 预报网格 */
+#forecast-card h2 { font-size: 16px; margin-bottom: 14px; }
+.forecast {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  gap: 10px;
+}
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 6px;
+  text-align: center;
+  font-size: 13px;
+}
+.day-card .d-date { color: var(--muted); }
+.day-card .d-icon { font-size: 30px; margin: 4px 0; }
+.day-card .d-desc { color: var(--muted); font-size: 12px; }
+.day-card .d-temp { font-weight: 700; }
+.day-card .d-temp small { color: var(--muted); font-weight: 400; }
+.day-card.today { border-color: var(--accent); background: #eef2ff; }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+footer a { color: var(--accent); text-decoration: none; }
