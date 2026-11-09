@@ -9,6 +9,7 @@
 // ============================================================
 
 const $ = (id) => document.getElementById(id);
+const STORAGE_KEY = "weather-last-city";
 
 // WMO 天气代码 → 中文描述 + 图标 + 背景类（API 返回的是数字，翻译全靠这张表）
 const WEATHER_CODES = {
@@ -133,6 +134,10 @@ async function loadWeather(city) {
     $("now-desc").textContent = w.desc;
     $("advice").textContent = "🧥 " + clothingAdvice(now.temperature_2m, now.weather_code);
     $("current-card").style.display = "block";
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ name: city.name, latitude: city.latitude, longitude: city.longitude })
+    );
 
     // --- 未来几天预报 ---
     const daily = data.daily;
@@ -166,3 +171,6 @@ $("search-btn").addEventListener("click", searchCity);
 $("city-input").addEventListener("keydown", (e) => {
   if (e.key === "Enter") searchCity();
 });
+// 启动读档：上次选过城市就直接自动加载，不用再搜
+const lastCity = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+if (lastCity) loadWeather(lastCity);
